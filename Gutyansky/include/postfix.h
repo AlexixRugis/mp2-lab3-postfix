@@ -1,5 +1,4 @@
-﻿#ifndef __POSTFIX_H__
-#define __POSTFIX_H__
+﻿#pragma once
 
 #include <string>
 #include "stack.h"
@@ -20,5 +19,3 @@ public:
     string ToPostfix();
     double Calculate(); // Ввод переменных, вычисление по постфиксной форме
 };
-
-#endif
