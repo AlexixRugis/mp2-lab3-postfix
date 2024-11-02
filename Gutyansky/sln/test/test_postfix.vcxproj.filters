@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_tpostfix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_tstack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{69B1E076-A11D-3877-A83C-99ADCF3E5029}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
