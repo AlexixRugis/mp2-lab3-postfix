@@ -16,7 +16,7 @@ private:
     size_t m_Size;
 
 public:
-    TStack(size_t sizeToReserve) : m_Capacity(0), m_Size(0)
+    TStack(size_t sizeToReserve = 0) : m_Capacity(0), m_Size(0), m_Memory(nullptr)
     {
         reserve(sizeToReserve);
     }
@@ -29,7 +29,7 @@ public:
         std::copy(other.m_Memory, other.m_Memory + m_Size, m_Memory);
     }
 
-    TStack(TStack&& other)
+    TStack(TStack&& other) noexcept
     {
         m_Capacity = other.m_Capacity;
         m_Size = other.m_Size;
@@ -61,9 +61,21 @@ public:
         return *this;
     }
 
-    TStack& operator=(TStack&& other)
+    TStack& operator=(TStack&& other) noexcept
     {
-        std::swap(*this, other);
+        if (m_Memory == other.m_Memory)
+        {
+            return *this;
+        }
+
+        m_Capacity = other.m_Capacity;
+        m_Size = other.m_Size;
+        m_Memory = other.m_Memory;
+
+        other.m_Size = 0;
+        other.m_Capacity = 0;
+        other.m_Memory = nullptr;
+
 
         return *this;
     }
@@ -154,7 +166,7 @@ public:
         std::swap(m_Memory, other.m_Memory);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const TStack& s) const
+    friend std::ostream& operator<<(std::ostream& os, const TStack& s)
     {
         for (size_t i = 0; i < s.size(); ++i)
         {
@@ -167,7 +179,9 @@ public:
 private:
     void expand()
     {
-        size_t newCapacity = min((size_t)1, m_Capacity << 1);
+        const size_t reallocationFactor = 2;
+
+        size_t newCapacity = std::max((size_t)1, m_Capacity * reallocationFactor);
         reserve(newCapacity);
     }
 };
