@@ -1,15 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\identifier_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\number_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\postfix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\symbol_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\identifier_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexem_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\number_parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\symbol_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -58,6 +58,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -89,6 +90,7 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -148,9 +150,22 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\identifier_parser.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_context.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_token.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\number_parser.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\postfix.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\symbol_parser.cpp" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\identifier_parser.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexem_parser.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_context.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_token.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\number_parser.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\stack.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\symbol_parser.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\sln\ZERO_CHECK.vcxproj">
