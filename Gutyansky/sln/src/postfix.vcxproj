@@ -52,7 +52,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -61,7 +61,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
@@ -70,10 +70,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -86,14 +86,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
@@ -104,10 +104,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\gtest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include;C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -155,6 +155,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_context.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\lexer_token.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\number_parser.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\opcodes.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\postfix.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\symbol_parser.cpp" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\identifier_parser.h" />
@@ -163,7 +164,16 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_context.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexer_token.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\number_parser.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\opcodes.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\posfix_div.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\posfix_mult.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_add.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_call.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_member.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_number.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_sub.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_var.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\stack.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\symbol_parser.h" />
   </ItemGroup>

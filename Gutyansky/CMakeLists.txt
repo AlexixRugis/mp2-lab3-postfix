@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Установить тип библиотеки времени выполнения
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+
 set(PROJECT_NAME postfix)
 project(${PROJECT_NAME})
 
@@ -18,12 +25,12 @@ set(MP2_LIBRARY "${PROJECT_NAME}")
 set(MP2_TESTS   "test_${PROJECT_NAME}")
 set(MP2_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-include_directories("${MP2_INCLUDE}" gtest)
+include_directories("${MP2_INCLUDE}" googletest)
 
 # BUILD
 add_subdirectory(src)
 add_subdirectory(samples)
-add_subdirectory(gtest)
+add_subdirectory(googletest)
 add_subdirectory(test)
 
 # REPORT

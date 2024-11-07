@@ -1,21 +1,19 @@
 ﻿#pragma once
 
 #include <string>
+#include "lexer.h"
 #include "stack.h"
 
-using namespace std;
-
-class TPostfix
+class Postfix final
 {
-    string infix;
-    string postfix;
 public:
-    TPostfix()
-    {
-        infix = "a + b";
-    }
-    string GetInfix() { return infix; }
-    string GetPostfix() { return postfix; }
-    string ToPostfix();
-    double Calculate(); // Ввод переменных, вычисление по постфиксной форме
+    Postfix(const std::string& infix) : m_Infix(infix), m_Lexer(infix) {}
+
+    std::string GetInfix() const noexcept { return m_Infix; }
+
+    double Calculate();
+
+private:
+    std::string m_Infix;
+    Lexer::Lexer m_Lexer;
 };

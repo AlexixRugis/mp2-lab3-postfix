@@ -1,8 +1,8 @@
 #include "postfix.h"
-#include <gtest.h>
+#include "gtest/gtest.h"
 
-TEST(TPostfix, can_create_postfix)
+TEST(Postfix, can_create_postfix)
 {
-    ASSERT_NO_THROW(TPostfix p);
+    ASSERT_NO_THROW(Postfix p("a+b"));
 }
 

@@ -8,20 +8,15 @@
 const int MaxStackSize = 100000000;
 
 template <typename T>
-class TStack
+class Stack
 {
-private:
-    T* m_Memory;
-    size_t m_Capacity;
-    size_t m_Size;
-
 public:
-    TStack(size_t sizeToReserve = 0) : m_Capacity(0), m_Size(0), m_Memory(nullptr)
+    Stack(size_t sizeToReserve = 0) : m_Capacity(0), m_Size(0), m_Memory(nullptr)
     {
         reserve(sizeToReserve);
     }
 
-    TStack(const TStack& other)
+    Stack(const Stack& other)
     {
         m_Capacity = other.m_Capacity;
         m_Size = other.m_Size;
@@ -29,7 +24,7 @@ public:
         std::copy(other.m_Memory, other.m_Memory + m_Size, m_Memory);
     }
 
-    TStack(TStack&& other) noexcept
+    Stack(Stack&& other) noexcept
     {
         m_Capacity = other.m_Capacity;
         m_Size = other.m_Size;
@@ -40,12 +35,12 @@ public:
         other.m_Memory = nullptr;
     }
 
-    ~TStack()
+    ~Stack()
     {
         delete[] m_Memory;
     }
 
-    TStack& operator=(const TStack& other)
+    Stack& operator=(const Stack& other)
     {
         if (other.m_Capacity > m_Capacity)
         {
@@ -61,7 +56,7 @@ public:
         return *this;
     }
 
-    TStack& operator=(TStack&& other) noexcept
+    Stack& operator=(Stack&& other) noexcept
     {
         if (m_Memory == other.m_Memory)
         {
@@ -159,14 +154,14 @@ public:
         m_Memory = tmp;
     }
 
-    friend void swap(TStack& lhs, TStack& rhs) noexcept
+    friend void swap(Stack& lhs, Stack& rhs) noexcept
     {
         std::swap(m_Size, other.m_Size);
         std::swap(m_Capacity, other.m_Capacity);
         std::swap(m_Memory, other.m_Memory);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const TStack& s)
+    friend std::ostream& operator<<(std::ostream& os, const Stack& s)
     {
         for (size_t i = 0; i < s.size(); ++i)
         {
@@ -177,6 +172,10 @@ public:
     }
 
 private:
+    T* m_Memory;
+    size_t m_Capacity;
+    size_t m_Size;
+
     void expand()
     {
         const size_t reallocationFactor = 2;

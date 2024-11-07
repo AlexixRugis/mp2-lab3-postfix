@@ -1,13 +1,13 @@
 ﻿#include "postfix.h"
 #include "stack.h"
 
-string TPostfix::ToPostfix()
-{
-    postfix = string("ab+");
-    return postfix;
-}
+//string TPostfix::ToPostfix()
+//{
+//    postfix = string("ab+");
+//    return postfix;
+//}
 
-double TPostfix::Calculate()
+double Postfix::Calculate()
 {
-    return 0;
+    return 0.0;
 }
