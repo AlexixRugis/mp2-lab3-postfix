@@ -5,6 +5,7 @@ std::string Lexer::ToString(Lexer::TokenType tokenType)
 {
     switch (tokenType)
     {
+    case TokenType::NONE: return "NONE";
     case TokenType::NUM: return "NUM";
     case TokenType::ID: return "ID";
     case TokenType::LPAR: return "LPAR";
@@ -13,7 +14,6 @@ std::string Lexer::ToString(Lexer::TokenType tokenType)
     case TokenType::MINUS: return "MINUS";
     case TokenType::MULT: return "MULT";
     case TokenType::DIV: return "DIV";
-    case TokenType::COMMA: return "COMMA";
     case TokenType::ENDOFFILE: return "ENDOFFILE";
     }
     return "UNKNOWN"; // Fallback for any unhandled cases

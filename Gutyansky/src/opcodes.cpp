@@ -11,6 +11,7 @@ std::string ToString(OpCode opcode)
     case OpCode::MULT: return "MULT";
     case OpCode::DIV: return "DIV";
     case OpCode::CALL: return "CALL";
+    case OpCode::UMINUS: return "UMINUS";
     default: return "UNKNOWN";
     }
 }

@@ -48,12 +48,6 @@
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\opcodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\posfix_div.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\posfix_mult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,13 +57,25 @@
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_call.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_div.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_member.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_mult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_number.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_operation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_sub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_uminus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\postfix_var.h">

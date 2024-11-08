@@ -1,15 +1,20 @@
 #pragma once
 
-#include "opcodes.h"
+#include "lexer_token.h"
 
-class PostfixMember
-{
+class PostfixMember {
 public:
-    PostfixMember(OpCode opcode) : m_OpCode(opcode) {}
-    virtual ~PostfixMember() {}
+    explicit PostfixMember(Lexer::Token token = {}, int precedence = 0, bool unary = false) :
+        m_Token(token), m_Precedence(precedence), m_Unary(unary) {}
 
-    OpCode Op() const noexcept { return m_OpCode; }
+    Lexer::Token Token() const noexcept { return m_Token; }
+    Lexer::TokenType Type() const noexcept { return m_Token.Type(); }
+    int Precedence() const noexcept { return m_Precedence; }
+    bool IsUnary() const noexcept { return m_Unary; }
 
 private:
-    OpCode m_OpCode;
+    Lexer::Token m_Token;
+    int m_Precedence;
+    bool m_Unary;
+
 };

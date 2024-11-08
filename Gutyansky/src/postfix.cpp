@@ -1,13 +1,274 @@
 ﻿#include "postfix.h"
-#include "stack.h"
 
-//string TPostfix::ToPostfix()
-//{
-//    postfix = string("ab+");
-//    return postfix;
-//}
+#include <unordered_set>
+#include <memory>
+#include <cstring>
+#include "stack.h"
+#include "postfix_member.h"
+#include "postfix_add.h"
+#include "postfix_sub.h"
+#include "postfix_div.h"
+#include "postfix_mult.h"
+#include "postfix_number.h"
+#include "postfix_var.h"
+#include "postfix_uminus.h"
+
+using Lexer::Token;
+using Lexer::TokenType;
+
+struct TokenTypePairHasher
+{
+    size_t operator()(std::pair<TokenType, TokenType> t) const
+    {
+        return static_cast<size_t>(t.first) * 1000 + static_cast<size_t>(t.second);
+    }
+};
+
+static const std::unordered_set<std::pair<TokenType, TokenType>, TokenTypePairHasher> validTokenSequences{
+    {TokenType::NONE, TokenType::NUM},
+    {TokenType::NONE, TokenType::ID},
+    {TokenType::NONE, TokenType::LPAR},
+    {TokenType::NONE, TokenType::MINUS},
+    {TokenType::NONE, TokenType::ENDOFFILE},
+    {TokenType::NUM, TokenType::PLUS},
+    {TokenType::NUM, TokenType::MINUS},
+    {TokenType::NUM, TokenType::MULT},
+    {TokenType::NUM, TokenType::DIV},
+    {TokenType::NUM, TokenType::RPAR},
+    {TokenType::NUM, TokenType::ENDOFFILE},
+    {TokenType::ID, TokenType::PLUS},
+    {TokenType::ID, TokenType::MINUS},
+    {TokenType::ID, TokenType::MULT},
+    {TokenType::ID, TokenType::DIV},
+    {TokenType::ID, TokenType::RPAR},
+    {TokenType::NUM, TokenType::ENDOFFILE},
+    {TokenType::LPAR, TokenType::NUM},
+    {TokenType::LPAR, TokenType::ID},
+    {TokenType::LPAR, TokenType::LPAR},
+    {TokenType::LPAR, TokenType::MINUS},
+    {TokenType::RPAR, TokenType::RPAR},
+    {TokenType::RPAR, TokenType::PLUS},
+    {TokenType::RPAR, TokenType::MINUS},
+    {TokenType::RPAR, TokenType::MULT},
+    {TokenType::RPAR, TokenType::DIV},
+    {TokenType::RPAR, TokenType::ENDOFFILE},
+    {TokenType::PLUS, TokenType::NUM},
+    {TokenType::PLUS, TokenType::ID},
+    {TokenType::PLUS, TokenType::LPAR},
+    {TokenType::MINUS, TokenType::NUM},
+    {TokenType::MINUS, TokenType::ID},
+    {TokenType::MINUS, TokenType::LPAR},
+    {TokenType::MULT, TokenType::NUM},
+    {TokenType::MULT, TokenType::ID},
+    {TokenType::MULT, TokenType::LPAR},
+    {TokenType::DIV, TokenType::NUM},
+    {TokenType::DIV, TokenType::ID},
+    {TokenType::DIV, TokenType::LPAR},
+};
+
+bool ValidateToken(TokenType prev, TokenType cur)
+{
+    return validTokenSequences.count({ prev, cur }) > 0;
+}
+
+bool IsBinaryOperator(Token token)
+{
+    switch (token.Type())
+    {
+    case TokenType::PLUS:
+    case TokenType::MINUS:
+    case TokenType::MULT:
+    case TokenType::DIV:
+        return true;
+    default:
+        return false;
+    }
+}
+
+bool IsUnaryOperator(Token token)
+{
+    switch (token.Type())
+    {
+    case TokenType::MINUS:
+        return true;
+    default:
+        return false;
+    }
+}
+
+PostfixMember ToMember(Token token, bool unary = false)
+{
+    switch (token.Type())
+    {
+    case TokenType::PLUS: return PostfixMember(token, 1);
+    case TokenType::MINUS: return PostfixMember(token, 1, unary);
+    case TokenType::MULT: return PostfixMember(token, 2);
+    case TokenType::DIV: return PostfixMember(token, 2);
+    case TokenType::LPAR: return PostfixMember(token);
+    default: throw std::invalid_argument(__FUNCTION__ ": Unknown operation provided");
+    }
+}
+
+std::shared_ptr<PostfixOperation> GetOperation(Token token, bool unary = false)
+{
+    switch (token.Type())
+    {
+    case TokenType::NUM:
+        return std::make_shared<PostfixNumber>(std::stod(token.Value()));
+    case TokenType::ID:
+        return std::make_shared<PostfixVar>(token.Value());
+    case TokenType::PLUS:
+        return std::make_shared<PostfixAdd>();
+    case TokenType::MINUS:
+        if (unary)
+            return std::make_shared<PostfixUMinus>();
+        else
+            return std::make_shared<PostfixSub>();
+    case TokenType::MULT:
+        return std::make_shared<PostfixMult>();
+    case TokenType::DIV:
+        return std::make_shared<PostfixDiv>();
+    default:
+        throw std::runtime_error("invalid op");
+    }
+}
+
+void Postfix::GeneratePostfix()
+{
+    if (m_GeneratedPostfix) return;
+
+    m_Postfix.clear();
+
+    Stack<PostfixMember> tokens;
+    int parentheses = 0;
+
+    Token prev = Token(TokenType::NONE);
+    Token tok = prev;
+
+    do
+    {
+        prev = tok;
+        tok = m_Lexer.NextToken();
+
+        TokenType prevType = prev.Type();
+        TokenType curType = tok.Type();
+
+        if (!ValidateToken(prevType, curType)) throw std::runtime_error("Unexpected token");
+
+        if (curType == TokenType::LPAR) parentheses++;
+        if (curType == TokenType::RPAR) parentheses--;
+        if (parentheses < 0) throw std::runtime_error("Unexpected right parenthesis");
+
+        if (curType == TokenType::NUM || curType == TokenType::ID)
+        {
+            m_Postfix.push_back(GetOperation(tok));
+
+            while (tokens.size() && tokens.top().IsUnary())
+            {
+                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
+                tokens.pop();
+            }
+        } else if (curType == TokenType::LPAR)
+        {
+            tokens.push(ToMember(tok));
+        } else if (curType == TokenType::RPAR)
+        {
+            while (tokens.top().Type() != TokenType::LPAR)
+            {
+                m_Postfix.push_back(GetOperation(tokens.top().Token()));
+                tokens.pop();
+            }
+            tokens.pop();
+        } else if (IsUnaryOperator(tok) && (prevType == TokenType::NONE || prevType == TokenType::LPAR || IsBinaryOperator(prev)))
+        {
+            tokens.push(PostfixMember(tok, 0, true));
+        } else if (IsBinaryOperator(tok))
+        {
+            PostfixMember member = ToMember(tok);
+            while (tokens.size() && member.Precedence() <= tokens.top().Precedence())
+            {
+                m_Postfix.push_back(GetOperation(tokens.top().Token()));
+                tokens.pop();
+            }
+            tokens.push(member);
+        }
+
+    } while (tok.Type() != TokenType::ENDOFFILE);
+
+    if (parentheses != 0)
+    {
+        throw std::runtime_error("Unclosed parenthesis");
+    }
+
+    while (tokens.size())
+    {
+        m_Postfix.push_back(GetOperation(tokens.top().Token(), tokens.top().IsUnary()));
+        tokens.pop();
+    }
+
+    m_GeneratedPostfix = true;
+}
 
 double Postfix::Calculate()
 {
-    return 0.0;
+    auto postfix = GetPostfix();
+
+    double a = 0.0, b = 0.0;
+    Stack<double> stack;
+
+    for (auto op : postfix)
+    {
+        switch (op->Op())
+        {
+        case OpCode::NUM:
+            stack.push(std::dynamic_pointer_cast<PostfixNumber>(op)->Value());
+            break;
+
+        case OpCode::VAR:
+            // later
+            break;
+
+        case OpCode::UMINUS:
+            a = stack.top(); stack.pop();
+            stack.push(-a);
+            break;
+
+        case OpCode::ADD:
+            b = stack.top(); stack.pop();
+            a = stack.top(); stack.pop();
+            stack.push(a + b);
+            break;
+
+        case OpCode::SUB:
+            b = stack.top(); stack.pop();
+            a = stack.top(); stack.pop();
+            stack.push(a - b);
+            break;
+
+        case OpCode::MULT:
+            b = stack.top(); stack.pop();
+            a = stack.top(); stack.pop();
+            stack.push(a * b);
+            break;
+
+        case OpCode::DIV:
+            b = stack.top(); stack.pop();
+            a = stack.top(); stack.pop();
+            if (b == 0.0)
+            {
+                throw std::runtime_error("Division by zero!");
+            }
+            stack.push(a / b);
+            break;
+        }
+    }
+
+
+    if (stack.size() == 0)
+    {
+        return 0.0;
+    } else
+    {
+        return stack.top();
+    }
 }

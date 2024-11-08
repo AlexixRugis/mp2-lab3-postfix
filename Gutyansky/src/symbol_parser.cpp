@@ -15,12 +15,13 @@ namespace Lexer {
     std::optional<Token> SymbolParser::TryParse(LexerContext& context)
     {
         auto iter = symbolsMap.find(context.CurrentChar());
+        context.NextChar();
 
         if (iter == symbolsMap.end())
         {
             return std::nullopt;
         }
 
-        return Token(iter->second, "");
+        return Token(iter->second);
     }
 }

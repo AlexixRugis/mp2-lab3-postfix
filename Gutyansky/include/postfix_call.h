@@ -1,11 +1,11 @@
 #pragma once
 
 #include <string>
-#include "postfix_member.h"
+#include "postfix_operation.h"
 
-class PostfixCall : public PostfixMember {
+class PostfixCall : public PostfixOperation {
 public:
-    PostfixCall(const std::string& name) : PostfixMember(OpCode::CALL), m_Name(name) {}
+    PostfixCall(const std::string& name) : PostfixOperation(OpCode::CALL), m_Name(name) {}
 
     std::string FuncName() const noexcept { return m_Name; }
 

@@ -4,9 +4,10 @@
 namespace Lexer {
     enum class TokenType
     {
+        NONE,
         NUM, ID, LPAR, RPAR,
         PLUS, MINUS, MULT, DIV,
-        COMMA, ENDOFFILE
+        ENDOFFILE
     };
 
     std::string ToString(TokenType type);
@@ -14,7 +15,8 @@ namespace Lexer {
     class Token
     {
     public:
-        Token(TokenType type, const std::string& value = "") : m_Type(type), m_Value(value) {}
+        Token(TokenType type = TokenType::NONE, const std::string& value = "") : m_Type(type), m_Value(value) {}
+
 
         TokenType Type() const { return m_Type; }
         std::string Value() const { return m_Value; }

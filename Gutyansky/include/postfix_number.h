@@ -1,10 +1,10 @@
 #pragma once
 
-#include "postfix_member.h"
+#include "postfix_operation.h"
 
-class PostfixNumber : public PostfixMember {
+class PostfixNumber : public PostfixOperation {
 public:
-    PostfixNumber(double value) : PostfixMember(OpCode::NUM), m_Value(value) {}
+    PostfixNumber(double value) : PostfixOperation(OpCode::NUM), m_Value(value) {}
 
     double Value() const noexcept { return m_Value; }
 

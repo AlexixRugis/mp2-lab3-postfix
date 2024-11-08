@@ -1,9 +1,9 @@
 #pragma once
 
-#include "postfix_member.h"
+#include "postfix_operation.h"
 
-class PostfixAdd : public PostfixMember {
+class PostfixAdd : public PostfixOperation {
 public:
-    PostfixAdd() : PostfixMember(OpCode::ADD) {}
+    PostfixAdd() : PostfixOperation(OpCode::ADD) {}
 
 };
