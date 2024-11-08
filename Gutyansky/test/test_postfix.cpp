@@ -9,7 +9,6 @@ TEST(PostfixTest, can_store_infix)
     EXPECT_EQ(postfix.GetInfix(), infix);
 }
 
-
 TEST(PostfixTest, can_parse_single_number)
 {
     Postfix postfix("199");
