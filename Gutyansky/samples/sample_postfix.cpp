@@ -1,23 +1,44 @@
 ﻿#include <iostream>
+#include <memory>
 #include <string>
-#include "postfix.h"
+#include <cmath>
 
-using namespace std;
+#include "postfix.h"
+#include "composite_provider.h"
+#include "const_provider.h"
+#include "user_input_provider.h"
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
     setlocale(LC_NUMERIC, "C");
 
-    string expression;
-    cout << "Введите арифметическое выражение: ";
-    getline(cin, expression);
+    std::shared_ptr<ConstProvider> constProvider = std::make_shared<ConstProvider>(std::unordered_map<std::string, double>{
+            {"PI", 3.14159265358979323846},
+            {"E", 2.718281828459}
+        });
+
+    std::shared_ptr<UserInputProvider> userInputProvider = std::make_shared<UserInputProvider>();
+
+    std::shared_ptr<IVariableProvider> provider = std::make_shared<CompositeProvider>(std::initializer_list<std::shared_ptr<IVariableProvider>>{
+        constProvider,
+        userInputProvider
+        });
+
+    std::string expression;
+    std::cout << "Введите арифметическое выражение: ";
+    std::getline(std::cin, expression);
     Postfix postfix(expression);
-    cout << "Арифметическое выражение: " << postfix.GetInfix() << endl;
+    std::cout << "Арифметическое выражение: " << postfix.GetInfix() << std::endl;
     auto p = postfix.GetPostfix();
-    //cout << "Постфиксная форма: " << postfix.GetPostfix() << endl;
-    double res = postfix.Calculate();
-    cout << "Результат: " << res << endl;
+    std::cout << "Постфиксная форма: ";
+    for (auto& op : p)
+    {
+        std::cout << op->ToString() << " ";
+    }
+    std::cout << std::endl;
+    double res = postfix.Calculate(provider);
+    std::cout << "Результат: " << res << std::endl;
 
     return 0;
 }

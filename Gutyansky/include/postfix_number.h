@@ -2,11 +2,21 @@
 
 #include "postfix_operation.h"
 
-class PostfixNumber : public PostfixOperation {
+class PostfixNumber : public IPostfixOperation {
 public:
-    PostfixNumber(double value) : PostfixOperation(OpCode::NUM), m_Value(value) {}
+    PostfixNumber(double value) : m_Value(value) {}
 
     double Value() const noexcept { return m_Value; }
+
+    void Execute(ExecutionContext& context) override
+    {
+        context.Push(Value());
+    }
+
+    std::string ToString() override
+    {
+        return std::to_string(Value());
+    }
 
 private:
     double m_Value;

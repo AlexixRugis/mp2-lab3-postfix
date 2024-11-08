@@ -1,15 +1,12 @@
 #pragma once
 
-#include "opcodes.h"
+#include <string>
+#include "execution_context.h"
 
-class PostfixOperation
+class IPostfixOperation
 {
 public:
-    PostfixOperation(OpCode opcode) : m_OpCode(opcode) {}
-    virtual ~PostfixOperation() {}
-
-    OpCode Op() const noexcept { return m_OpCode; }
-
-private:
-    OpCode m_OpCode;
+    virtual ~IPostfixOperation() = 0 {}
+    virtual void Execute(ExecutionContext& context) = 0;
+    virtual std::string ToString() = 0;
 };

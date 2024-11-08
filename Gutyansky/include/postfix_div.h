@@ -2,8 +2,24 @@
 
 #include "postfix_operation.h"
 
-class PostfixDiv : public PostfixOperation {
+class PostfixDiv : public IPostfixOperation {
 public:
-    PostfixDiv() : PostfixOperation(OpCode::DIV) {}
+    void Execute(ExecutionContext& context) override
+    {
+        double b = context.Pop();
+        double a = context.Pop();
+
+        if (b == 0.0)
+        {
+            throw std::runtime_error("Division by zero!");
+        }
+
+        context.Push(a / b);
+    }
+
+    std::string ToString() override
+    {
+        return "/";
+    }
 
 };

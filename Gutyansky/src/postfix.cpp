@@ -12,6 +12,9 @@
 #include "postfix_number.h"
 #include "postfix_var.h"
 #include "postfix_uminus.h"
+#include "postfix_sin.h"
+#include "postfix_cos.h"
+#include "postfix_exp.h"
 
 using Lexer::Token;
 using Lexer::TokenType;
@@ -40,8 +43,9 @@ static const std::unordered_set<std::pair<TokenType, TokenType>, TokenTypePairHa
     {TokenType::ID, TokenType::MINUS},
     {TokenType::ID, TokenType::MULT},
     {TokenType::ID, TokenType::DIV},
+    {TokenType::ID, TokenType::LPAR},
     {TokenType::ID, TokenType::RPAR},
-    {TokenType::NUM, TokenType::ENDOFFILE},
+    {TokenType::ID, TokenType::ENDOFFILE},
     {TokenType::LPAR, TokenType::NUM},
     {TokenType::LPAR, TokenType::ID},
     {TokenType::LPAR, TokenType::LPAR},
@@ -91,6 +95,8 @@ bool IsUnaryOperator(Token token)
     {
     case TokenType::MINUS:
         return true;
+    case TokenType::ID:
+        return token.Value() == "sin" || token.Value() == "cos" || token.Value() == "exp";
     default:
         return false;
     }
@@ -109,14 +115,23 @@ PostfixMember ToMember(Token token, bool unary = false)
     }
 }
 
-std::shared_ptr<PostfixOperation> GetOperation(Token token, bool unary = false)
+std::shared_ptr<IPostfixOperation> GetOperation(Token token, bool unary = false)
 {
     switch (token.Type())
     {
     case TokenType::NUM:
         return std::make_shared<PostfixNumber>(std::stod(token.Value()));
     case TokenType::ID:
-        return std::make_shared<PostfixVar>(token.Value());
+        if (unary)
+        {
+            if (token.Value() == "sin") return std::make_shared<PostfixSin>();
+            else if (token.Value() == "cos") return std::make_shared<PostfixCos>();
+            else if (token.Value() == "exp") return std::make_shared<PostfixExp>();
+            else throw std::runtime_error("Unknown function");
+        } else
+        {
+            return std::make_shared<PostfixVar>(token.Value());
+        }
     case TokenType::PLUS:
         return std::make_shared<PostfixAdd>();
     case TokenType::MINUS:
@@ -159,16 +174,7 @@ void Postfix::GeneratePostfix()
         if (curType == TokenType::RPAR) parentheses--;
         if (parentheses < 0) throw std::runtime_error("Unexpected right parenthesis");
 
-        if (curType == TokenType::NUM || curType == TokenType::ID)
-        {
-            m_Postfix.push_back(GetOperation(tok));
-
-            while (tokens.size() && tokens.top().IsUnary())
-            {
-                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
-                tokens.pop();
-            }
-        } else if (curType == TokenType::LPAR)
+        if (curType == TokenType::LPAR)
         {
             tokens.push(ToMember(tok));
         } else if (curType == TokenType::RPAR)
@@ -179,6 +185,12 @@ void Postfix::GeneratePostfix()
                 tokens.pop();
             }
             tokens.pop();
+
+            while (tokens.size() && tokens.top().IsUnary())
+            {
+                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
+                tokens.pop();
+            }
         } else if (IsUnaryOperator(tok) && (prevType == TokenType::NONE || prevType == TokenType::LPAR || IsBinaryOperator(prev)))
         {
             tokens.push(PostfixMember(tok, 0, true));
@@ -191,6 +203,15 @@ void Postfix::GeneratePostfix()
                 tokens.pop();
             }
             tokens.push(member);
+        } else if (curType == TokenType::NUM || curType == TokenType::ID)
+        {
+            m_Postfix.push_back(GetOperation(tok));
+
+            while (tokens.size() && tokens.top().IsUnary())
+            {
+                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
+                tokens.pop();
+            }
         }
 
     } while (tok.Type() != TokenType::ENDOFFILE);
@@ -209,66 +230,18 @@ void Postfix::GeneratePostfix()
     m_GeneratedPostfix = true;
 }
 
-double Postfix::Calculate()
+double Postfix::Calculate(const std::shared_ptr<IVariableProvider>& variables)
 {
     auto postfix = GetPostfix();
 
     double a = 0.0, b = 0.0;
-    Stack<double> stack;
+
+    ExecutionContext ctx(variables);
 
     for (auto op : postfix)
     {
-        switch (op->Op())
-        {
-        case OpCode::NUM:
-            stack.push(std::dynamic_pointer_cast<PostfixNumber>(op)->Value());
-            break;
-
-        case OpCode::VAR:
-            // later
-            break;
-
-        case OpCode::UMINUS:
-            a = stack.top(); stack.pop();
-            stack.push(-a);
-            break;
-
-        case OpCode::ADD:
-            b = stack.top(); stack.pop();
-            a = stack.top(); stack.pop();
-            stack.push(a + b);
-            break;
-
-        case OpCode::SUB:
-            b = stack.top(); stack.pop();
-            a = stack.top(); stack.pop();
-            stack.push(a - b);
-            break;
-
-        case OpCode::MULT:
-            b = stack.top(); stack.pop();
-            a = stack.top(); stack.pop();
-            stack.push(a * b);
-            break;
-
-        case OpCode::DIV:
-            b = stack.top(); stack.pop();
-            a = stack.top(); stack.pop();
-            if (b == 0.0)
-            {
-                throw std::runtime_error("Division by zero!");
-            }
-            stack.push(a / b);
-            break;
-        }
+        op->Execute(ctx);
     }
 
-
-    if (stack.size() == 0)
-    {
-        return 0.0;
-    } else
-    {
-        return stack.top();
-    }
+    return ctx.Result();
 }

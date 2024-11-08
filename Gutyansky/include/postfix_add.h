@@ -2,8 +2,18 @@
 
 #include "postfix_operation.h"
 
-class PostfixAdd : public PostfixOperation {
+class PostfixAdd : public IPostfixOperation {
 public:
-    PostfixAdd() : PostfixOperation(OpCode::ADD) {}
+    void Execute(ExecutionContext& context) override
+    {
+        double b = context.Pop();
+        double a = context.Pop();
+        context.Push(a + b);
+    }
+
+    std::string ToString() override
+    {
+        return "+";
+    }
 
 };
