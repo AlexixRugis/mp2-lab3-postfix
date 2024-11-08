@@ -14,7 +14,7 @@ namespace Lexer {
         Lexer(const std::string& str);
 
         Token NextToken();
-        
+
     private:
         std::vector<std::shared_ptr<ILexemParser>> m_LexemParsers;
 

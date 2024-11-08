@@ -8,5 +8,6 @@ namespace Lexer {
     {
     public:
         std::optional<Token> TryParse(LexerContext& context);
+
     };
 }

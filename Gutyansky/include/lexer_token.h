@@ -17,7 +17,6 @@ namespace Lexer {
     public:
         Token(TokenType type = TokenType::NONE, const std::string& value = "") : m_Type(type), m_Value(value) {}
 
-
         TokenType Type() const { return m_Type; }
         std::string Value() const { return m_Value; }
 

@@ -3,7 +3,8 @@
 #include <cmath>
 #include "postfix_operation.h"
 
-class PostfixSin : public IPostfixOperation {
+class PostfixSin : public IPostfixOperation
+{
 public:
     void Execute(ExecutionContext& context) override
     {

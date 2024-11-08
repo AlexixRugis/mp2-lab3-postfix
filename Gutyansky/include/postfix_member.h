@@ -2,10 +2,12 @@
 
 #include "lexer_token.h"
 
-class PostfixMember {
+class PostfixMember
+{
 public:
     explicit PostfixMember(Lexer::Token token = {}, int precedence = 0, bool unary = false) :
-        m_Token(token), m_Precedence(precedence), m_Unary(unary) {}
+        m_Token(token), m_Precedence(precedence), m_Unary(unary)
+    {}
 
     Lexer::Token Token() const noexcept { return m_Token; }
     Lexer::TokenType Type() const noexcept { return m_Token.Type(); }

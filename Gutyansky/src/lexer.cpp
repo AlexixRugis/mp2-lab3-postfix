@@ -67,8 +67,7 @@ namespace Lexer {
 
     void Lexer::ThrowError(const std::string& error) const
     {
-        std::cout << '(' << m_Context.m_CharNumber << ") " << error << std::endl;
-        exit(-1);
+        throw std::runtime_error("(" + std::to_string(m_Context.m_CharNumber) + ")" + error);
     }
 
     void Lexer::NextChar()

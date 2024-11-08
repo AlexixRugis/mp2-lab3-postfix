@@ -4,10 +4,12 @@
 #include <iostream>
 #include "variable_provider.h"
 
-class UserInputProvider : public IVariableProvider {
+class UserInputProvider : public IVariableProvider
+{
 public:
     bool HasVariable(const std::string& name) const override { return true; }
-    double GetVariable(const std::string& name) override { 
+    double GetVariable(const std::string& name) override
+    {
         if (m_Cached.find(name) == m_Cached.end())
         {
             double v;

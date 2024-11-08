@@ -10,8 +10,9 @@
 class Postfix final
 {
 public:
-    Postfix(const std::string& infix) : 
-        m_Infix(infix), m_Lexer(infix), m_GeneratedPostfix(false) {}
+    Postfix(const std::string& infix) :
+        m_Infix(infix), m_Lexer(infix), m_GeneratedPostfix(false)
+    {}
 
     std::string GetInfix() const { return m_Infix; }
     std::vector<std::shared_ptr<IPostfixOperation>> GetPostfix()
@@ -22,6 +23,7 @@ public:
     }
 
     double Calculate(const std::shared_ptr<IVariableProvider>& variables);
+    double Calculate();
 
 private:
     std::string m_Infix;

@@ -159,6 +159,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\src\symbol_parser.cpp" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\composite_provider.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\const_provider.h" />
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\dummy_provider.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\execution_context.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\identifier_parser.h" />
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\lexem_parser.h" />

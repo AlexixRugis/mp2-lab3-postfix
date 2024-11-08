@@ -3,7 +3,8 @@
 #include <string>
 #include "postfix_operation.h"
 
-class PostfixVar : public IPostfixOperation {
+class PostfixVar : public IPostfixOperation
+{
 public:
     PostfixVar(const std::string& name) : m_Name(name) {}
 

@@ -2,7 +2,8 @@
 
 #include "postfix_operation.h"
 
-class PostfixSub : public IPostfixOperation {
+class PostfixSub : public IPostfixOperation
+{
 public:
     void Execute(ExecutionContext& context) override
     {

@@ -30,6 +30,9 @@
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\const_provider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\dummy_provider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\include\execution_context.h">
       <Filter>Header Files</Filter>
     </ClInclude>

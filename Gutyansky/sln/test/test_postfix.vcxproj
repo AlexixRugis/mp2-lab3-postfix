@@ -178,9 +178,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_lexer.cpp" />
     <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_main.cpp" />
-    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_tpostfix.cpp" />
-    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_tstack.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_postfix.cpp" />
+    <ClCompile Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\test\test_stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\GitHub_Repos\mp2-lab3-postfix\Gutyansky\sln\ZERO_CHECK.vcxproj">

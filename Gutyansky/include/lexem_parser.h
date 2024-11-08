@@ -7,7 +7,9 @@ namespace Lexer {
     class ILexemParser
     {
     public:
-        virtual std::optional<Token> TryParse(LexerContext& context) = 0;
         virtual ~ILexemParser() {};
+
+        virtual std::optional<Token> TryParse(LexerContext& context) = 0;
+
     };
 }

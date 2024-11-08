@@ -4,6 +4,7 @@
 #include <memory>
 #include <cstring>
 #include "stack.h"
+#include "dummy_provider.h"
 #include "postfix_member.h"
 #include "postfix_add.h"
 #include "postfix_sub.h"
@@ -115,7 +116,7 @@ PostfixMember ToMember(Token token, bool unary = false)
     }
 }
 
-std::shared_ptr<IPostfixOperation> GetOperation(Token token, bool unary = false)
+std::shared_ptr<IPostfixOperation> CreateOperation(Token token, bool unary = false)
 {
     switch (token.Type())
     {
@@ -127,7 +128,7 @@ std::shared_ptr<IPostfixOperation> GetOperation(Token token, bool unary = false)
             if (token.Value() == "sin") return std::make_shared<PostfixSin>();
             else if (token.Value() == "cos") return std::make_shared<PostfixCos>();
             else if (token.Value() == "exp") return std::make_shared<PostfixExp>();
-            else throw std::runtime_error("Unknown function");
+            else throw std::runtime_error(__FUNCTION__ ": Unknown function");
         } else
         {
             return std::make_shared<PostfixVar>(token.Value());
@@ -144,7 +145,7 @@ std::shared_ptr<IPostfixOperation> GetOperation(Token token, bool unary = false)
     case TokenType::DIV:
         return std::make_shared<PostfixDiv>();
     default:
-        throw std::runtime_error("invalid op");
+        throw std::runtime_error(__FUNCTION__ ": Invalid operation");
     }
 }
 
@@ -168,11 +169,11 @@ void Postfix::GeneratePostfix()
         TokenType prevType = prev.Type();
         TokenType curType = tok.Type();
 
-        if (!ValidateToken(prevType, curType)) throw std::runtime_error("Unexpected token");
+        if (!ValidateToken(prevType, curType)) throw std::runtime_error(__FUNCTION__ ": Unexpected token");
 
         if (curType == TokenType::LPAR) parentheses++;
         if (curType == TokenType::RPAR) parentheses--;
-        if (parentheses < 0) throw std::runtime_error("Unexpected right parenthesis");
+        if (parentheses < 0) throw std::runtime_error(__FUNCTION__ ": Unexpected right parenthesis");
 
         if (curType == TokenType::LPAR)
         {
@@ -181,14 +182,14 @@ void Postfix::GeneratePostfix()
         {
             while (tokens.top().Type() != TokenType::LPAR)
             {
-                m_Postfix.push_back(GetOperation(tokens.top().Token()));
+                m_Postfix.push_back(CreateOperation(tokens.top().Token()));
                 tokens.pop();
             }
             tokens.pop();
 
             while (tokens.size() && tokens.top().IsUnary())
             {
-                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
+                m_Postfix.push_back(CreateOperation(tokens.top().Token(), true));
                 tokens.pop();
             }
         } else if (IsUnaryOperator(tok) && (prevType == TokenType::NONE || prevType == TokenType::LPAR || IsBinaryOperator(prev)))
@@ -199,17 +200,17 @@ void Postfix::GeneratePostfix()
             PostfixMember member = ToMember(tok);
             while (tokens.size() && member.Precedence() <= tokens.top().Precedence())
             {
-                m_Postfix.push_back(GetOperation(tokens.top().Token()));
+                m_Postfix.push_back(CreateOperation(tokens.top().Token()));
                 tokens.pop();
             }
             tokens.push(member);
         } else if (curType == TokenType::NUM || curType == TokenType::ID)
         {
-            m_Postfix.push_back(GetOperation(tok));
+            m_Postfix.push_back(CreateOperation(tok));
 
             while (tokens.size() && tokens.top().IsUnary())
             {
-                m_Postfix.push_back(GetOperation(tokens.top().Token(), true));
+                m_Postfix.push_back(CreateOperation(tokens.top().Token(), true));
                 tokens.pop();
             }
         }
@@ -218,12 +219,12 @@ void Postfix::GeneratePostfix()
 
     if (parentheses != 0)
     {
-        throw std::runtime_error("Unclosed parenthesis");
+        throw std::runtime_error(__FUNCTION__ ": Unclosed parenthesis");
     }
 
     while (tokens.size())
     {
-        m_Postfix.push_back(GetOperation(tokens.top().Token(), tokens.top().IsUnary()));
+        m_Postfix.push_back(CreateOperation(tokens.top().Token(), tokens.top().IsUnary()));
         tokens.pop();
     }
 
@@ -244,4 +245,9 @@ double Postfix::Calculate(const std::shared_ptr<IVariableProvider>& variables)
     }
 
     return ctx.Result();
+}
+
+double Postfix::Calculate()
+{
+    return Calculate(std::make_shared<DummyProvider>());
 }

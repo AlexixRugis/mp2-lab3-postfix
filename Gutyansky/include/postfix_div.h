@@ -2,7 +2,8 @@
 
 #include "postfix_operation.h"
 
-class PostfixDiv : public IPostfixOperation {
+class PostfixDiv : public IPostfixOperation
+{
 public:
     void Execute(ExecutionContext& context) override
     {
@@ -11,7 +12,7 @@ public:
 
         if (b == 0.0)
         {
-            throw std::runtime_error("Division by zero!");
+            throw std::runtime_error(__FUNCTION__ ": Division by zero!");
         }
 
         context.Push(a / b);

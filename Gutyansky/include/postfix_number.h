@@ -2,7 +2,8 @@
 
 #include "postfix_operation.h"
 
-class PostfixNumber : public IPostfixOperation {
+class PostfixNumber : public IPostfixOperation
+{
 public:
     PostfixNumber(double value) : m_Value(value) {}
 
