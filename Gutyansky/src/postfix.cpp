@@ -177,41 +177,41 @@ void Postfix::GeneratePostfix()
 
         if (curType == TokenType::LPAR)
         {
-            tokens.push(ToMember(tok));
+            tokens.Push(ToMember(tok));
         } else if (curType == TokenType::RPAR)
         {
-            while (tokens.top().Type() != TokenType::LPAR)
+            while (tokens.Top().Type() != TokenType::LPAR)
             {
-                m_Postfix.push_back(CreateOperation(tokens.top().Token()));
-                tokens.pop();
+                m_Postfix.push_back(CreateOperation(tokens.Top().Token()));
+                tokens.Pop();
             }
-            tokens.pop();
+            tokens.Pop();
 
-            while (tokens.size() && tokens.top().IsUnary())
+            while (tokens.Size() && tokens.Top().IsUnary())
             {
-                m_Postfix.push_back(CreateOperation(tokens.top().Token(), true));
-                tokens.pop();
+                m_Postfix.push_back(CreateOperation(tokens.Top().Token(), true));
+                tokens.Pop();
             }
         } else if (IsUnaryOperator(tok) && (prevType == TokenType::NONE || prevType == TokenType::LPAR || IsBinaryOperator(prev)))
         {
-            tokens.push(PostfixMember(tok, 0, true));
+            tokens.Push(PostfixMember(tok, 0, true));
         } else if (IsBinaryOperator(tok))
         {
             PostfixMember member = ToMember(tok);
-            while (tokens.size() && member.Precedence() <= tokens.top().Precedence())
+            while (tokens.Size() && member.Precedence() <= tokens.Top().Precedence())
             {
-                m_Postfix.push_back(CreateOperation(tokens.top().Token()));
-                tokens.pop();
+                m_Postfix.push_back(CreateOperation(tokens.Top().Token()));
+                tokens.Pop();
             }
-            tokens.push(member);
+            tokens.Push(member);
         } else if (curType == TokenType::NUM || curType == TokenType::ID)
         {
             m_Postfix.push_back(CreateOperation(tok));
 
-            while (tokens.size() && tokens.top().IsUnary())
+            while (tokens.Size() && tokens.Top().IsUnary())
             {
-                m_Postfix.push_back(CreateOperation(tokens.top().Token(), true));
-                tokens.pop();
+                m_Postfix.push_back(CreateOperation(tokens.Top().Token(), true));
+                tokens.Pop();
             }
         }
 
@@ -222,10 +222,10 @@ void Postfix::GeneratePostfix()
         throw std::runtime_error(__FUNCTION__ ": Unclosed parenthesis");
     }
 
-    while (tokens.size())
+    while (tokens.Size())
     {
-        m_Postfix.push_back(CreateOperation(tokens.top().Token(), tokens.top().IsUnary()));
-        tokens.pop();
+        m_Postfix.push_back(CreateOperation(tokens.Top().Token(), tokens.Top().IsUnary()));
+        tokens.Pop();
     }
 
     m_GeneratedPostfix = true;

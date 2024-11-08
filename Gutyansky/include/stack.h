@@ -13,7 +13,7 @@ class Stack
 public:
     Stack(size_t sizeToReserve = 0) : m_Capacity(0), m_Size(0), m_Memory(nullptr)
     {
-        reserve(sizeToReserve);
+        Reserve(sizeToReserve);
     }
 
     Stack(const Stack& other)
@@ -75,34 +75,34 @@ public:
         return *this;
     }
 
-    size_t size() const noexcept
+    size_t Size() const noexcept
     {
         return m_Size;
     }
 
-    size_t capacity() const noexcept
+    size_t Capacity() const noexcept
     {
         return m_Capacity;
     }
 
-    bool empty() const noexcept
+    bool Empty() const noexcept
     {
-        return size() == 0;
+        return Size() == 0;
     }
 
-    const T& top() const
+    const T& Top() const
     {
-        if (empty())
+        if (Empty())
         {
             throw std::logic_error("Stack is empty");
         }
 
-        return m_Memory[size() - 1];
+        return m_Memory[Size() - 1];
     }
 
-    void pop()
+    void Pop()
     {
-        if (empty())
+        if (Empty())
         {
             throw std::logic_error("Can't pop from empty stack");
         }
@@ -110,34 +110,34 @@ public:
         --m_Size;
     }
 
-    void push(const T& elem)
+    void Push(const T& elem)
     {
         if (m_Size == m_Capacity)
         {
-            expand();
+            Expand();
         }
 
         m_Memory[m_Size++] = elem;
     }
 
-    void push(T&& elem)
+    void Push(T&& elem)
     {
         if (m_Size == m_Capacity)
         {
-            expand();
+            Expand();
         }
 
         m_Memory[m_Size++] = std::move(elem);
     }
 
-    void reserve(size_t newCapacity)
+    void Reserve(size_t newCapacity)
     {
         if (newCapacity > MaxStackSize)
         {
             throw std::length_error("Maximum stack length is " STR(MaxStackSize));
         }
 
-        if (newCapacity <= capacity())
+        if (newCapacity <= Capacity())
         {
             return;
         }
@@ -163,7 +163,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Stack& s)
     {
-        for (size_t i = 0; i < s.size(); ++i)
+        for (size_t i = 0; i < s.Size(); ++i)
         {
             os << s.m_Memory[i] << ' ';
         }
@@ -176,11 +176,11 @@ private:
     size_t m_Capacity;
     size_t m_Size;
 
-    void expand()
+    void Expand()
     {
         const size_t reallocationFactor = 2;
 
         size_t newCapacity = std::max((size_t)1, m_Capacity * reallocationFactor);
-        reserve(newCapacity);
+        Reserve(newCapacity);
     }
 };

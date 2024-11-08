@@ -22,19 +22,19 @@ public:
 
     void Push(double v)
     {
-        m_Stack.push(v);
+        m_Stack.Push(v);
     }
 
     double Pop()
     {
-        double tmp = m_Stack.top();
-        m_Stack.pop();
+        double tmp = m_Stack.Top();
+        m_Stack.Pop();
         return tmp;
     }
 
     double Result()
     {
-        if (m_Stack.size() == 0)
+        if (m_Stack.Size() == 0)
         {
             throw std::runtime_error("No result");
         }
